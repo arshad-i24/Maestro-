@@ -1,0 +1,271 @@
+{
+  "metadata": {
+    "engine": "maestro",
+    "version": "0.1.0",
+    "timestamp": "2026-09-04T17:30:05.546140+00:00",
+    "input_format": "wav",
+    "tonic_midi": 60,
+    "extra": {}
+  },
+  "audio": {
+    "file_path": "input\\sample_melody.wav",
+    "format": "wav",
+    "sample_rate": 22050,
+    "channels": 1,
+    "duration": 2.6239,
+    "peak_amplitude": 0.9
+  },
+  "vocal_separation": {
+    "performed": true,
+    "method": "demucs",
+    "model": "htdemucs",
+    "device": "cpu",
+    "vocals_path": null,
+    "instrumental_path": null
+  },
+  "tempo": {
+    "bpm": 90.0,
+    "source": "provided"
+  },
+  "pitch_analysis": {
+    "frames_analyzed": 55,
+    "voiced_frames": 55,
+    "fundamental_freq_mean": 704.24,
+    "fundamental_freq_min": 529.09,
+    "fundamental_freq_max": 884.69
+  },
+  "midi": {
+    "tempo": 90.0,
+    "ticks_per_beat": 480,
+    "notes": [
+      {
+        "pitch": 72,
+        "start": 0.0,
+        "end": 0.16254,
+        "duration": 0.16254
+      },
+      {
+        "pitch": 76,
+        "start": 0.18576,
+        "end": 0.301859,
+        "duration": 0.1161
+      },
+      {
+        "pitch": 79,
+        "start": 0.325079,
+        "end": 0.510839,
+        "duration": 0.18576
+      },
+      {
+        "pitch": 81,
+        "start": 0.487619,
+        "end": 0.743039,
+        "duration": 0.25542
+      },
+      {
+        "pitch": 79,
+        "start": 0.719819,
+        "end": 0.905578,
+        "duration": 0.18576
+      },
+      {
+        "pitch": 76,
+        "start": 0.928798,
+        "end": 1.114558,
+        "duration": 0.18576
+      },
+      {
+        "pitch": 72,
+        "start": 1.160998,
+        "end": 1.277098,
+        "duration": 0.1161
+      }
+    ],
+    "file_path": "output\\sample_melody.mid"
+  },
+  "swaras": [
+    {
+      "midi_note": 72.2921,
+      "frequency": 532.1544,
+      "swara": "Sa",
+      "swara_type": "shuddha",
+      "octave": "taar",
+      "cents_from_tonic": 14750.5157,
+      "start": 0.0,
+      "end": 0.16254,
+      "duration": 0.16254,
+      "confidence": 0.830237
+    },
+    {
+      "midi_note": 75.8921,
+      "frequency": 655.1589,
+      "swara": "Ga",
+      "swara_type": "shuddha",
+      "octave": "taar",
+      "cents_from_tonic": 19070.5152,
+      "start": 0.18576,
+      "end": 0.301859,
+      "duration": 0.1161,
+      "confidence": 0.829187
+    },
+    {
+      "midi_note": 79.1422,
+      "frequency": 790.4556,
+      "swara": "Pa",
+      "swara_type": "shuddha",
+      "octave": "taar",
+      "cents_from_tonic": 22970.6037,
+      "start": 0.325079,
+      "end": 0.510839,
+      "duration": 0.18576,
+      "confidence": 0.818638
+    },
+    {
+      "midi_note": 80.9921,
+      "frequency": 879.5984,
+      "swara": "Dha",
+      "swara_type": "shuddha",
+      "octave": "taar",
+      "cents_from_tonic": 25190.517,
+      "start": 0.487619,
+      "end": 0.743039,
+      "duration": 0.25542,
+      "confidence": 0.844609
+    },
+    {
+      "midi_note": 79.0921,
+      "frequency": 788.1726,
+      "swara": "Pa",
+      "swara_type": "shuddha",
+      "octave": "taar",
+      "cents_from_tonic": 22910.5162,
+      "start": 0.719819,
+      "end": 0.905578,
+      "duration": 0.18576,
+      "confidence": 0.850014
+    },
+    {
+      "midi_note": 75.9422,
+      "frequency": 657.0566,
+      "swara": "Ga",
+      "swara_type": "shuddha",
+      "octave": "taar",
+      "cents_from_tonic": 19130.6019,
+      "start": 0.928798,
+      "end": 1.114558,
+      "duration": 0.18576,
+      "confidence": 0.75337
+    },
+    {
+      "midi_note": 72.2921,
+      "frequency": 532.1544,
+      "swara": "Sa",
+      "swara_type": "shuddha",
+      "octave": "taar",
+      "cents_from_tonic": 14750.5157,
+      "start": 1.160998,
+      "end": 1.277098,
+      "duration": 0.1161,
+      "confidence": 0.965334
+    }
+  ],
+  "lyrics": {
+    "aligned": false,
+    "source": "none",
+    "confidence": 0.0,
+    "segments": []
+  },
+  "notation": [
+    {
+      "swara": "Sa",
+      "octave": "taar",
+      "start": 0.0,
+      "end": 0.16254,
+      "duration": 0.16254,
+      "lyric": null,
+      "confidence": 0.830237,
+      "symbol": "S'"
+    },
+    {
+      "swara": "Ga",
+      "octave": "taar",
+      "start": 0.18576,
+      "end": 0.301859,
+      "duration": 0.1161,
+      "lyric": null,
+      "confidence": 0.829187,
+      "symbol": "G'"
+    },
+    {
+      "swara": "Pa",
+      "octave": "taar",
+      "start": 0.325079,
+      "end": 0.510839,
+      "duration": 0.18576,
+      "lyric": null,
+      "confidence": 0.818638,
+      "symbol": "P'"
+    },
+    {
+      "swara": "Dha",
+      "octave": "taar",
+      "start": 0.487619,
+      "end": 0.743039,
+      "duration": 0.25542,
+      "lyric": null,
+      "confidence": 0.844609,
+      "symbol": "D'"
+    },
+    {
+      "swara": "Pa",
+      "octave": "taar",
+      "start": 0.719819,
+      "end": 0.905578,
+      "duration": 0.18576,
+      "lyric": null,
+      "confidence": 0.850014,
+      "symbol": "P'"
+    },
+    {
+      "swara": "Ga",
+      "octave": "taar",
+      "start": 0.928798,
+      "end": 1.114558,
+      "duration": 0.18576,
+      "lyric": null,
+      "confidence": 0.75337,
+      "symbol": "G'"
+    },
+    {
+      "swara": "Sa",
+      "octave": "taar",
+      "start": 1.160998,
+      "end": 1.277098,
+      "duration": 0.1161,
+      "lyric": null,
+      "confidence": 0.965334,
+      "symbol": "S'"
+    }
+  ],
+  "statistics": {
+    "total_seconds": 16.3853,
+    "stages": {
+      "config": 0.0,
+      "loading": 0.0071,
+      "preprocessing": 0.0005,
+      "vocal_separation": 12.202,
+      "vocal_preprocessing": 0.0005,
+      "pitch_detection": 4.1399,
+      "note_segmentation": 0.0,
+      "midi_generation": 0.0332,
+      "swara_conversion": 0.0001,
+      "lyrics_alignment": 0.0,
+      "notation": 0.0001
+    }
+  },
+  "warnings": [],
+  "processing": {
+    "note_count": 7,
+    "job_id": null
+  }
+}

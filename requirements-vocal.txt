@@ -1,0 +1,7 @@
+# --- Maestro AI: optional heavy stack (vocal separation + auto lyrics) ---
+# Install only if you want real vocal isolation / Whisper lyric generation.
+# CPU works but is slow.
+#   pip install -r requirements-vocal.txt
+torch>=2.1
+demucs>=4.0.1
+faster-whisper>=1.1

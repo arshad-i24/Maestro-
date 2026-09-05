@@ -1,0 +1,1268 @@
+/* ==========================================
+   MAESTRO AI WORKSPACE
+========================================== */
+
+.ai-workspace {
+  width: 100%;
+  padding: 120px 20px;
+  position: relative;
+}
+
+.ai-workspace-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.ai-workspace-header {
+  max-width: 760px;
+  margin: 0 auto 55px;
+  text-align: center;
+}
+
+.ai-workspace-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-bottom: 18px;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+
+  opacity: 0.55;
+}
+
+.ai-workspace-eyebrow::before {
+  content: "";
+
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: currentColor;
+
+  box-shadow: 0 0 15px currentColor;
+}
+
+.ai-workspace-header h2 {
+  margin: 0;
+
+  font-size: clamp(40px, 5vw, 62px);
+  line-height: 1.04;
+  font-weight: 700;
+  letter-spacing: -2px;
+}
+
+.ai-workspace-header h2 span {
+  display: block;
+
+  opacity: 0.42;
+}
+
+.ai-workspace-header p {
+  max-width: 630px;
+
+  margin: 24px auto 0;
+
+  font-size: 14px;
+  line-height: 1.8;
+
+  opacity: 0.48;
+}
+
+
+/* ==========================================
+   UPLOAD BOX
+========================================== */
+
+.ai-upload-box {
+  min-height: 430px;
+
+  padding: 55px 30px;
+
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  overflow: hidden;
+
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+  border-radius: 28px;
+
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(255, 255, 255, 0.055),
+      transparent 42%
+    ),
+    rgba(255, 255, 255, 0.018);
+
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.ai-upload-box::before {
+  content: "";
+
+  position: absolute;
+
+  width: 320px;
+  height: 320px;
+
+  top: -180px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.035);
+
+  filter: blur(50px);
+
+  pointer-events: none;
+}
+
+.ai-upload-box:hover,
+.ai-upload-dragging {
+  border-color: rgba(255, 255, 255, 0.45);
+
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(255, 255, 255, 0.08),
+      transparent 42%
+    ),
+    rgba(255, 255, 255, 0.025);
+
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 20px 80px rgba(0, 0, 0, 0.18);
+}
+
+
+/* ==========================================
+   UPLOAD ICON
+========================================== */
+
+.ai-upload-icon {
+  width: 78px;
+  height: 78px;
+
+  margin-bottom: 27px;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  border-radius: 22px;
+
+  background: rgba(255, 255, 255, 0.055);
+
+  font-size: 34px;
+
+  box-shadow:
+    0 0 0 8px rgba(255, 255, 255, 0.015),
+    0 0 45px rgba(255, 255, 255, 0.05);
+
+  animation: aiIconFloat 4s ease-in-out infinite;
+}
+
+@keyframes aiIconFloat {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+
+}
+
+
+.ai-upload-box h3 {
+  margin: 0;
+
+  font-size: 25px;
+  font-weight: 650;
+}
+
+
+.ai-upload-box p {
+  margin: 10px 0 5px;
+
+  font-size: 14px;
+
+  opacity: 0.48;
+}
+
+
+.ai-upload-or {
+  margin: 7px 0 18px;
+
+  font-size: 11px;
+
+  opacity: 0.3;
+}
+
+
+/* ==========================================
+   CHOOSE BUTTON
+========================================== */
+
+.ai-choose-button {
+  padding: 14px 28px;
+
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+
+  background: #ffffff;
+  color: #000000;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.ai-choose-button:hover {
+  transform: translateY(-2px);
+
+  opacity: 0.92;
+
+  box-shadow:
+    0 8px 30px rgba(255, 255, 255, 0.12);
+}
+
+
+.ai-supported-formats {
+  margin-top: 25px;
+
+  font-size: 9px;
+  letter-spacing: 2px;
+
+  opacity: 0.25;
+}
+
+
+/* ==========================================
+   SELECTED FILE
+========================================== */
+
+.ai-selected-wrapper {
+  max-width: 800px;
+
+  margin: 0 auto;
+}
+
+
+.ai-selected-file {
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  padding: 20px;
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.055),
+      rgba(255, 255, 255, 0.018)
+    );
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.12);
+}
+
+
+.ai-file-icon {
+  width: 58px;
+  height: 58px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.065);
+
+  font-size: 25px;
+}
+
+
+.ai-file-details {
+  flex: 1;
+
+  min-width: 0;
+}
+
+
+.ai-file-details h3 {
+  margin: 0 0 7px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+.ai-file-details p {
+  margin: 0;
+
+  font-size: 10px;
+
+  opacity: 0.42;
+}
+
+
+.ai-remove-button {
+  width: 38px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.045);
+
+  color: inherit;
+
+  font-size: 21px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.ai-remove-button:hover {
+  background: rgba(255, 255, 255, 0.12);
+
+  transform: scale(1.04);
+}
+
+
+/* ==========================================
+   TRANSCRIBE BUTTON
+========================================== */
+
+.ai-transcribe-button {
+  width: 100%;
+
+  margin-top: 16px;
+
+  padding: 17px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: #ffffff;
+  color: #000000;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.ai-transcribe-button:hover {
+  transform: translateY(-2px);
+
+  opacity: 0.92;
+
+  box-shadow:
+    0 10px 35px rgba(255, 255, 255, 0.1);
+}
+
+.ai-transcribe-button span {
+  margin-right: 8px;
+}
+
+
+.ai-lyrics-root {
+  margin-top: 14px;
+}
+
+.ai-lyrics-box {
+  margin-top: 14px;
+}
+
+.ai-auto-lyrics-toggle {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  cursor: pointer;
+
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+
+  user-select: none;
+}
+
+.ai-auto-lyrics-toggle input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+
+  accent-color: #a855f7;
+
+  cursor: pointer;
+}
+
+.ai-auto-lyrics-hint {
+  margin-top: 10px;
+
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+
+  line-height: 1.5;
+}
+
+.ai-lyrics-input {
+  width: 100%;
+
+  margin-top: 14px;
+
+  padding: 13px 16px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.045);
+
+  color: inherit;
+
+  font-size: 12px;
+  font-family: inherit;
+  line-height: 1.5;
+
+  resize: vertical;
+
+  outline: none;
+
+  box-sizing: border-box;
+
+  transition: border-color 0.2s ease;
+}
+
+.ai-lyrics-input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.ai-lyrics-input:focus {
+  border-color: rgba(168, 85, 247, 0.5);
+}
+
+.ai-error-message {
+  margin-top: 14px;
+
+  padding: 12px 16px;
+
+  border-radius: 10px;
+
+  background: rgba(220, 38, 38, 0.12);
+
+  color: #fca5a5;
+
+  font-size: 13px;
+  line-height: 1.5;
+
+  text-align: center;
+}
+
+
+/* ==========================================
+   PROCESSING
+========================================== */
+
+.ai-processing-card {
+  max-width: 800px;
+  min-height: 410px;
+
+  margin: 0 auto;
+
+  padding: 55px;
+
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+
+  border-radius: 25px;
+
+  background:
+    radial-gradient(
+      circle at 50% 40%,
+      rgba(255, 255, 255, 0.055),
+      transparent 40%
+    ),
+    rgba(255, 255, 255, 0.025);
+}
+
+
+.ai-processing-animation {
+  width: 100px;
+  height: 100px;
+
+  margin-bottom: 28px;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.ai-pulse-ring {
+  position: absolute;
+
+  width: 92px;
+  height: 92px;
+
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  border-radius: 50%;
+
+  animation: aiPulse 1.7s infinite ease-out;
+}
+
+
+.ai-processing-animation::before,
+.ai-processing-animation::after {
+  content: "";
+
+  position: absolute;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  animation: aiOrbit 3s linear infinite;
+}
+
+.ai-processing-animation::before {
+  width: 110px;
+  height: 55px;
+}
+
+.ai-processing-animation::after {
+  width: 55px;
+  height: 110px;
+
+  animation-duration: 4s;
+}
+
+
+@keyframes aiOrbit {
+
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+
+.ai-processing-note {
+  width: 57px;
+  height: 57px;
+
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.13);
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  font-size: 25px;
+
+  box-shadow:
+    0 0 35px rgba(255, 255, 255, 0.07);
+
+  animation: aiFloatNote 1.5s infinite ease-in-out;
+}
+
+
+@keyframes aiPulse {
+
+  0% {
+    transform: scale(0.7);
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+
+}
+
+
+@keyframes aiFloatNote {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
+
+}
+
+
+.ai-processing-card h3 {
+  margin: 0;
+
+  font-size: 24px;
+}
+
+
+.ai-processing-card p {
+  margin: 10px 0 27px;
+
+  font-size: 13px;
+
+  opacity: 0.45;
+}
+
+
+.ai-processing-bar {
+  width: min(420px, 100%);
+  height: 4px;
+
+  overflow: hidden;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.09);
+}
+
+
+.ai-processing-progress {
+  width: 0%;
+  height: 100%;
+
+  border-radius: inherit;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 15px rgba(255, 255, 255, 0.5);
+
+  animation: aiProcessing 3s ease-in-out forwards;
+}
+
+
+@keyframes aiProcessing {
+
+  0% {
+    width: 0%;
+  }
+
+  55% {
+    width: 62%;
+  }
+
+  100% {
+    width: 100%;
+  }
+
+}
+
+
+.ai-processing-status {
+  margin-top: 13px;
+
+  font-size: 9px;
+  letter-spacing: 1.5px;
+
+  opacity: 0.3;
+}
+
+
+/* ==========================================
+   RESULT
+========================================== */
+
+.ai-result {
+  max-width: 1000px;
+
+  margin: 0 auto;
+
+  animation: aiResultAppear 0.6s ease forwards;
+}
+
+
+@keyframes aiResultAppear {
+
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+
+.ai-result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 25px;
+}
+
+
+.ai-result-label {
+  font-size: 9px;
+  letter-spacing: 2px;
+  font-weight: 700;
+
+  opacity: 0.42;
+}
+
+
+.ai-result-header h3 {
+  margin: 8px 0;
+
+  font-size: 29px;
+  letter-spacing: -0.5px;
+}
+
+
+.ai-result-header p {
+  margin: 0;
+
+  font-size: 11px;
+
+  opacity: 0.42;
+}
+
+
+.ai-result-check {
+  width: 56px;
+  height: 56px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.07);
+
+  font-size: 22px;
+
+  box-shadow:
+    0 0 30px rgba(255, 255, 255, 0.05);
+}
+
+
+/* ==========================================
+   MUSIC INFORMATION
+========================================== */
+
+.ai-music-info {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 12px;
+
+  margin-bottom: 15px;
+}
+
+
+.ai-info-card {
+  padding: 20px;
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.045),
+      rgba(255, 255, 255, 0.018)
+    );
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+
+.ai-info-card:hover {
+  transform: translateY(-2px);
+
+  background: rgba(255, 255, 255, 0.055);
+}
+
+
+.ai-info-card span {
+  display: block;
+
+  margin-bottom: 9px;
+
+  font-size: 9px;
+  letter-spacing: 0.5px;
+
+  opacity: 0.35;
+}
+
+
+.ai-info-card strong {
+  font-size: 16px;
+}
+
+
+/* ==========================================
+   RESULT CARDS
+========================================== */
+
+.ai-result-card {
+  margin-top: 15px;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 255, 255, 0.075);
+
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.025);
+}
+
+
+.ai-result-card-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 18px 20px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.065);
+}
+
+
+.ai-result-card-heading h4 {
+  margin: 0;
+
+  font-size: 13px;
+}
+
+
+.ai-result-card-heading span {
+  font-size: 9px;
+
+  opacity: 0.38;
+}
+
+
+/* ==========================================
+   INSTRUMENTS
+========================================== */
+
+.ai-instrument-list {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 9px;
+
+  padding: 20px;
+}
+
+
+.ai-instrument-tag {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 9px 13px;
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  border-radius: 9px;
+
+  background: rgba(255, 255, 255, 0.045);
+
+  font-size: 11px;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.ai-instrument-tag:hover {
+  background: rgba(255, 255, 255, 0.08);
+
+  transform: translateY(-1px);
+}
+
+
+.ai-instrument-tag span {
+  opacity: 0.4;
+}
+
+
+/* ==========================================
+   NOTES TABLE
+========================================== */
+
+.ai-notation-output {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+
+  padding: 22px 20px;
+}
+
+
+.ai-notation-line {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  align-items: flex-start;
+
+  gap: 22px 30px;
+
+  padding-bottom: 16px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.ai-notation-line:last-child {
+  border-bottom: none;
+
+  padding-bottom: 0;
+}
+
+
+.ai-notation-group {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 6px;
+
+  min-width: 46px;
+}
+
+
+.ai-notation-word {
+  font-size: 11px;
+  font-weight: 600;
+
+  letter-spacing: 0.3px;
+
+  color: #c4b5fd;
+
+  white-space: nowrap;
+}
+
+
+.ai-notation-symbols {
+  font-size: 15px;
+  font-weight: 700;
+
+  line-height: 1.4;
+
+  color: #ffffff;
+
+  letter-spacing: 1px;
+
+  white-space: nowrap;
+}
+
+
+.ai-notes-header,
+.ai-note-row {
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    2fr
+    1fr
+    1.5fr;
+
+  gap: 15px;
+
+  align-items: center;
+
+  padding: 14px 20px;
+}
+
+
+.ai-notes-header {
+  font-size: 8px;
+  letter-spacing: 1.5px;
+
+  opacity: 0.3;
+}
+
+
+.ai-note-row {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+  font-size: 10px;
+}
+
+
+.ai-note-row strong {
+  font-size: 13px;
+}
+
+
+/* ==========================================
+   RESULT ACTIONS
+========================================== */
+
+.ai-result-actions {
+  display: flex;
+
+  gap: 12px;
+
+  margin-top: 25px;
+}
+
+
+.ai-upload-another,
+.ai-download-button {
+  flex: 1;
+
+  padding: 14px;
+
+  border-radius: 12px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+
+.ai-upload-another {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  background: transparent;
+
+  color: inherit;
+}
+
+
+.ai-upload-another:hover {
+  transform: translateY(-2px);
+
+  background: rgba(255, 255, 255, 0.04);
+}
+
+
+.ai-download-button {
+  border: none;
+
+  background: #ffffff;
+  color: #000000;
+}
+
+
+.ai-download-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  opacity: 0.9;
+}
+
+
+.ai-download-button:disabled {
+  opacity: 0.28;
+
+  cursor: not-allowed;
+}
+
+
+.ai-prototype-message {
+  margin: 20px 0 0;
+
+  text-align: center;
+
+  font-size: 9px;
+
+  opacity: 0.25;
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 700px) {
+
+  .ai-workspace {
+    padding: 80px 15px;
+  }
+
+  .ai-upload-box {
+    min-height: 360px;
+
+    padding: 40px 20px;
+  }
+
+  .ai-music-info {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ai-result-header {
+    align-items: flex-start;
+  }
+
+  .ai-result-check {
+    width: 45px;
+    height: 45px;
+  }
+
+  .ai-notes-header,
+  .ai-note-row {
+    grid-template-columns:
+      1fr
+      1.5fr
+      1fr;
+  }
+
+  .ai-notes-header span:last-child,
+  .ai-note-row span:last-child {
+    display: none;
+  }
+
+  .ai-result-actions {
+    flex-direction: column;
+  }
+}
+
+
+@media (max-width: 450px) {
+
+  .ai-workspace-header h2 {
+    font-size: 36px;
+    letter-spacing: -1.5px;
+  }
+
+  .ai-music-info {
+    gap: 8px;
+  }
+
+  .ai-info-card {
+    padding: 15px;
+  }
+
+  .ai-selected-file {
+    padding: 15px;
+
+    gap: 12px;
+  }
+
+  .ai-file-icon {
+    width: 45px;
+    height: 45px;
+  }
+
+  .ai-file-details h3 {
+    font-size: 13px;
+  }
+
+  .ai-upload-icon {
+    width: 68px;
+    height: 68px;
+  }
+}

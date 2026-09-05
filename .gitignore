@@ -1,0 +1,19 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+input/*.wav
+input/*.mp3
+input/*.flac
+input/*.m4a
+output/*.mid
+output/*.wav
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# frontend (built into the repo)
+frontend/node_modules/
+frontend/dist/
