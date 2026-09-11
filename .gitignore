@@ -17,3 +17,40 @@ build/
 # frontend (built into the repo)
 frontend/node_modules/
 frontend/dist/
+# Generated output
+output/*.json
+output/*.mid
+output/*.wav
+
+# Temporary debug files
+debug_*.txt
+check_*.py
+check_*.txt
+fix_*.py
+full_out.txt
+json_test*.txt
+output.txt
+output_*.txt
+response_*.bin
+response_*.txt
+search_*.py
+search_out.txt
+test_api_*.py
+test_debug*.py
+test_debug*.txt
+test_frontend_layout.js
+test_layout.js
+test_hindi*.py
+test_hinglish*.py
+test_json_encoding.py
+test_long_lyrics.py
+test_lyrics_proc.py
+test_multi_note.js
+test_output.txt
+test_result.txt
+test_translit*.py
+test_unicode*.py
+test_urdu*
+api_full.json
+api_result.txt
+context_out.txt

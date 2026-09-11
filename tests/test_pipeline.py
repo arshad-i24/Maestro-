@@ -85,6 +85,7 @@ def test_invalid_tonic_raises_structured(config, melody_wav):
 
 def test_auto_lyrics_from_vocals(config, melody_wav, monkeypatch):
     from maestro import pipeline as pipeline_mod
+    from maestro.lyric_asr import TranscriptionResult, WordTimestamp
 
     class FakeGenerator:
         def __init__(self, *args, **kwargs):
@@ -93,7 +94,15 @@ def test_auto_lyrics_from_vocals(config, melody_wav, monkeypatch):
         @staticmethod
         def transcribe(audio, conf=None):
             assert audio.samples.size > 0
-            return "tu maana gaana hai"
+            return TranscriptionResult(
+                text="tu maana gaana hai",
+                words=[
+                    WordTimestamp(word="tu", start=0.1, end=0.3, confidence=0.9),
+                    WordTimestamp(word="maana", start=0.3, end=0.7, confidence=0.9),
+                    WordTimestamp(word="gaana", start=0.7, end=1.1, confidence=0.9),
+                    WordTimestamp(word="hai", start=1.1, end=1.3, confidence=0.9),
+                ],
+            )
 
     monkeypatch.setattr(pipeline_mod, "generate_lyrics", FakeGenerator.transcribe)
 
@@ -108,3 +117,6 @@ def test_auto_lyrics_from_vocals(config, melody_wav, monkeypatch):
     assert [s.word for s in result.lyrics.segments] == ["tu", "maana", "gaana", "hai"]
     assert any(entry.lyric for entry in result.notation)
     assert any(w.code == "LYRICS_AUTO" for w in result.warnings)
+    # Check word timestamps are preserved
+    assert len(result.lyrics.word_timestamps) == 4
+    assert result.lyrics.word_timestamps[0].word == "tu"

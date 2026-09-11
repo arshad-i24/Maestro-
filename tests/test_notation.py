@@ -13,7 +13,7 @@ def test_rendered_symbols():
     assert render_swara_symbol(conv.convert(61)) == "R(k)"     # komal Re
     assert render_swara_symbol(conv.convert(64)) == "G"        # Ga madhya
     assert render_swara_symbol(conv.convert(66)) == "M"        # tivra Ma
-    assert render_swara_symbol(conv.convert(48)) == ".S"       # Sa mandra
+    assert render_swara_symbol(conv.convert(48)) == "s"        # Sa mandra (lowercase)
     assert render_swara_symbol(conv.convert(55)) == "p"        # Pa mandra
     assert render_swara_symbol(conv.convert(72)) == "S'"       # Sa taar
     assert render_swara_symbol(conv.convert(65)) == "m"        # shuddha Ma
@@ -43,7 +43,7 @@ def test_generate_with_lyrics():
     notes = [
         DetectedNote(frequency=261.63, midi_note=60.0, start=0.0, end=0.4, duration=0.4, confidence=0.9)
     ]
-    entries = NotationGenerator(SwaraConverter(60)).generate(notes, lyric_map={0: "tu"})
+    entries = NotationGenerator(SwaraConverter(60)).generate(notes, lyric_map={0: ["tu"]})
     assert entries[0].lyric == "tu"
 
 
