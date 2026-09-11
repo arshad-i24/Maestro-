@@ -3,11 +3,11 @@
 Converts detected notes + swaras into readable structured notation entries.
 
 Octave markers:
-* ``.Sa`` = mandra (lower)
-* ``Sa`` = madhya (middle)
-* ``'Sa`` = taar (upper)
+* Lower octave (mandra): lowercase (s, r, g, m, p, d, n)
+* Middle octave (madhya): uppercase (S, R, G, m, P, D, N)
+* Higher octave (taar): uppercase + apostrophe (S', R', G', m', P', D', N')
 
-Accidentals: komal → lowercase (r g d n), tivra Ma → ``M#``.
+Accidentals: komal uses (k) suffix, tivra Ma uses M.
 """
 
 from __future__ import annotations
@@ -32,24 +32,35 @@ _SYMBOL = {
     ("Ni", "shuddha"): "N",
 }
 
-_LOW_OCTAVE_LOWERCASE = {"Pa", "Dha", "Ni"}
-
 
 def render_swara_symbol(swara: SwaraPitch) -> str:
+    """Render a swara pitch as Hindustani notation symbol.
+
+    Octave convention:
+    - mandra (lower): lowercase (s, r, g, m, p, d, n, r(k), g(k), etc.)
+    - madhya (middle): uppercase (S, R, G, m, P, D, N, R(k), G(k), etc.)
+    - taar (higher): uppercase + apostrophe (S', R', G', m', P', D', N', etc.)
+    - extended: multiple apostrophes or lowercase prefixes
+    """
     base = _SYMBOL.get((swara.swara, swara.swara_type), swara.swara)
 
     if swara.octave == "madhya":
         return base
     if swara.octave == "mandra":
-        if swara.swara in _LOW_OCTAVE_LOWERCASE:
-            return base.lower()
-        return f".{base}"
+        # Lower octave: use lowercase for all notes
+        return base.lower()
     if swara.octave == "taar":
+        # Higher octave: add apostrophe
         return f"{base}'"
     if swara.octave.startswith("extended"):
         shift = swara.octave_index
-        prefix = "." if shift < 0 else "'"
-        return f"{prefix * abs(shift)}{base}"
+        if shift < 0:
+            # Multiple lower octaves: more lowercase (already lowercase, add more markers)
+            return f"{'.' * abs(shift)}{base.lower()}"
+        else:
+            # Multiple higher octaves: more apostrophes
+            apostrophe = "'"
+            return f"{base}{apostrophe * shift}"
     return base
 
 
@@ -62,12 +73,14 @@ class NotationGenerator:
     def generate(
         self,
         notes: list,
-        lyric_map: Optional[dict[int, str]] = None,
+        lyric_map: Optional[dict[int, list[str]]] = None,
     ) -> list[NotationEntryOut]:
         entries: list[NotationEntryOut] = []
         for idx, note in enumerate(notes):
             pitch = self.converter.convert(note.midi_note, note.frequency)
-            lyric = lyric_map.get(idx) if lyric_map else None
+            lyrics_list = lyric_map.get(idx) if lyric_map else None
+            # Join multiple lyrics with a separator for display
+            lyric = ", ".join(lyrics_list) if lyrics_list else None
             entries.append(
                 NotationEntryOut(
                     swara=pitch.swara,

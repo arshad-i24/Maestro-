@@ -4,33 +4,33 @@ import { Menu, X, ArrowRight } from "lucide-react";
 
 import logo from "../assets/images/maestro-logo1.png.png";
 
+const navigation = [
+  {
+    name: "Home",
+    id: "home",
+  },
+  {
+    name: "Features",
+    id: "features",
+  },
+  {
+    name: "Workflow",
+    id: "workflow",
+  },
+  {
+    name: "Technology",
+    id: "technology",
+  },
+  {
+    name: "Team",
+    id: "team",
+  },
+];
+
 function Navbar() {
   const [activeSection, setActiveSection] = useState("home");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
-  const navigation = [
-    {
-      name: "Home",
-      id: "home",
-    },
-    {
-      name: "Features",
-      id: "features",
-    },
-    {
-      name: "Workflow",
-      id: "workflow",
-    },
-    {
-      name: "Technology",
-      id: "technology",
-    },
-    {
-      name: "Team",
-      id: "team",
-    },
-  ];
 
   /* Detect scroll position */
   useEffect(() => {

@@ -3,12 +3,16 @@
 Wraps ``faster-whisper`` so the engine can generate lyrics directly from the
 isolated vocals — no manual lyric text required. Lazily loads the CTranslate2
 model and caches it across requests (like the Demucs separator).
+
+Returns word-level timestamps for precise lyric-note alignment.
 """
 
 from __future__ import annotations
 
 import logging
 import threading
+from dataclasses import dataclass
+from typing import Optional
 
 import numpy as np
 
@@ -20,6 +24,24 @@ logger = logging.getLogger("maestro.lyric_asr")
 
 _MODEL_LOCK = threading.Lock()
 _MODEL_CACHE: dict[tuple[str, str, str], object] = {}
+
+
+@dataclass
+class WordTimestamp:
+    """A single word with its timestamp and confidence."""
+    word: str
+    start: float
+    end: float
+    confidence: float
+
+
+@dataclass
+class TranscriptionResult:
+    """Structured transcription result with word timestamps."""
+    text: str
+    words: list[WordTimestamp]
+    language: Optional[str] = None
+    language_probability: Optional[float] = None
 
 
 def _shared_model(model_name: str, device: str, compute_type: str):
@@ -77,27 +99,44 @@ class WhisperLyricGenerator:
         gcd = int(np.gcd(int(audio.sample_rate), 16000))
         return resample_poly(samples, 16000 // gcd, int(audio.sample_rate) // gcd).astype(np.float32)
 
-    def transcribe(self, audio: AudioData) -> str:
-        """Return the lyric text transcribed from *audio*, or "" if empty."""
+    def transcribe(self, audio: AudioData) -> TranscriptionResult:
+        """Return structured transcription with word timestamps from *audio*."""
         if not audio.samples.size:
             raise MaestroError(ErrorCode.LYRICS_ALIGNMENT_FAILED, "cannot transcribe lyrics: empty audio")
         samples = self._to_16k(audio)
         model = self._load_model()
         try:
-            segments, _ = model.transcribe(
+            segments, info = model.transcribe(
                 samples,
                 language=None,
                 beam_size=5,
                 vad_filter=True,
                 vad_parameters={"min_silence_duration_ms": 300},
                 condition_on_previous_text=True,
+                word_timestamps=True,
             )
-            parts: list[str] = []
+            all_words: list[WordTimestamp] = []
+            text_parts: list[str] = []
             for seg in segments:
-                text = (seg.text or "").strip()
-                if text:
-                    parts.append(text)
-            return " ".join(parts)
+                seg_text = (seg.text or "").strip()
+                if seg_text:
+                    text_parts.append(seg_text)
+                if hasattr(seg, "words") and seg.words:
+                    for w in seg.words:
+                        word_text = (w.word or "").strip()
+                        if word_text:
+                            all_words.append(WordTimestamp(
+                                word=word_text,
+                                start=round(float(w.start), 3),
+                                end=round(float(w.end), 3),
+                                confidence=round(float(w.probability), 4),
+                            ))
+            return TranscriptionResult(
+                text=" ".join(text_parts),
+                words=all_words,
+                language=info.language if info else None,
+                language_probability=info.language_probability if info else None,
+            )
         except Exception as exc:
             raise MaestroError(
                 ErrorCode.LYRICS_ALIGNMENT_FAILED,
@@ -106,10 +145,10 @@ class WhisperLyricGenerator:
             ) from exc
 
 
-def generate_lyrics(audio: AudioData, conf: AppConfig) -> str:
-    """Convenience: generate lyric text for the vocal track, or "" when ASR is off."""
+def generate_lyrics(audio: AudioData, conf: AppConfig) -> TranscriptionResult:
+    """Generate structured lyric transcription with word timestamps for the vocal track."""
     model_name = (conf.lyric_asr_model or "").strip().lower()
     if not model_name or model_name in ("none", "off", "disabled"):
-        return ""
+        return TranscriptionResult(text="", words=[])
     generator = WhisperLyricGenerator(model_name=model_name, device=conf.device, compute_type="int8")
     return generator.transcribe(audio)

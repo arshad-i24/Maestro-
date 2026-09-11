@@ -88,6 +88,11 @@ class SeparationResult:
     separated: bool = False
     vocals_path: Optional[str] = None
     instrumental_path: Optional[str] = None
+    # Diagnostics
+    vocal_rms: float = 0.0
+    vocal_peak: float = 0.0
+    vocal_duration: float = 0.0
+    instrumental_rms: float = 0.0
 
 
 @dataclass
@@ -102,6 +107,10 @@ class LyricUnit:
     notes: list[int] = field(default_factory=list)
     confidence: float = 0.0
     alignment_method: str = "time-proportional"
+    # Whisper word timestamps (if available)
+    whisper_start: Optional[float] = None
+    whisper_end: Optional[float] = None
+    whisper_confidence: Optional[float] = None
 
 
 # ---------------------------------------------------------------------------
@@ -201,6 +210,10 @@ class VocalSeparationOut(BaseModel):
     device: Optional[str] = None
     vocals_path: Optional[str] = None
     instrumental_path: Optional[str] = None
+    vocal_rms: float = 0.0
+    vocal_peak: float = 0.0
+    vocal_duration: float = 0.0
+    instrumental_rms: float = 0.0
 
 
 class TempoOut(BaseModel):
@@ -228,11 +241,19 @@ class ProcessingStatsOut(BaseModel):
     stages: dict[str, float] = Field(default_factory=dict)
 
 
+class WordTimestampOut(BaseModel):
+    word: str
+    start: float = Field(ge=0)
+    end: float = Field(ge=0)
+    confidence: float = Field(ge=0, le=1)
+
+
 class LyricsOut(BaseModel):
     aligned: bool
     source: str = "none"
     confidence: float = Field(ge=0, le=1)
     segments: list[LyricSegmentOut] = Field(default_factory=list)
+    word_timestamps: list[WordTimestampOut] = Field(default_factory=list)
 
 
 class MaestroResult(BaseModel):

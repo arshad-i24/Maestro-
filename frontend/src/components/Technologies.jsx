@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Code2, Cpu, Database, Zap, Music, Brain } from "lucide-react";
+import { Code2, Database, Zap, Music, Brain } from "lucide-react";
 
 
 function Technologies() {

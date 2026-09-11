@@ -5,7 +5,7 @@ Demucs (htdemucs) as primary isolate-vocals engine.
 Design rules:
 * Swappable behind BaseSeparator interface.
 * Lazy loading + model caching across requests.
-* If Demucs (torch) unavailable → documented passthrough fallback.
+* If Demucs (torch) unavailable → explicit error unless passthrough is opted in.
 """
 
 from __future__ import annotations
@@ -123,7 +123,10 @@ class DemucsSeparator(BaseSeparator):
 
     def separate(self, audio: AudioData) -> SeparationResult:
         if not self.available:
-            return PassthroughSeparator().separate(audio)
+            raise MaestroError(
+                ErrorCode.VOCAL_SEPARATION_FAILED,
+                "Demucs separator unavailable (torch/demucs not installed). Set vocal_separation_model='passthrough' to use full mix explicitly.",
+            )
         try:
             return self._run(audio)
         except MaestroError:
@@ -203,16 +206,13 @@ def _make_separator(conf: AppConfig) -> BaseSeparator:
     requested = conf.vocal_separation_model.lower()
     if requested in ("none", "passthrough", "skip"):
         return PassthroughSeparator()
-    try:
-        return DemucsSeparator(
-            model_name=requested,
-            device=conf.device,
-            model_dir=conf.model_dir,
-            reuse=conf.reuse_models,
-            sample_rate=conf.sample_rate,
-        )
-    except Exception:
-        return PassthroughSeparator()
+    return DemucsSeparator(
+        model_name=requested,
+        device=conf.device,
+        model_dir=conf.model_dir,
+        reuse=conf.reuse_models,
+        sample_rate=conf.sample_rate,
+    )
 
 
 def get_separator(conf: AppConfig) -> BaseSeparator:
@@ -230,16 +230,29 @@ def separate_vocals(
     output_dir: str = "",
     keep_stems: bool = False,
 ) -> tuple[SeparationResult, list[str]]:
-    """Separate vocals from audio. Returns (result, warnings)."""
+    """Separate vocals from audio. Returns (result, warnings).
+    
+    Raises MaestroError if separation is requested but unavailable/failed.
+    Use vocal_separation_model='passthrough' in config to explicitly opt-in to full-mix mode.
+    """
     warnings: list[str] = []
     separator = get_separator(conf)
-    if isinstance(separator, PassthroughSeparator) and conf.vocal_separation_model not in ("none", "passthrough", "skip"):
-        warnings.append(
-            f"Vocal separation model '{conf.vocal_separation_model}' is not available; "
-            "using the full mix as the vocal stem (passthrough). Install demucs+torch "
-            "to enable real separation."
-        )
     result = separator.separate(audio)
+
+    # Compute diagnostics for the vocal stem
+    vocal_rms = float(np.sqrt(np.mean(result.vocals.mono() ** 2))) if result.vocals.samples.size > 0 else 0.0
+    vocal_peak = float(np.max(np.abs(result.vocals.mono()))) if result.vocals.samples.size > 0 else 0.0
+    vocal_duration = result.vocals.duration
+
+    instrumental_rms = 0.0
+    if result.instrumental is not None and result.instrumental.samples.size > 0:
+        instrumental_rms = float(np.sqrt(np.mean(result.instrumental.mono() ** 2)))
+
+    # Attach diagnostics to result for pipeline/API exposure
+    result.vocal_rms = vocal_rms
+    result.vocal_peak = vocal_peak
+    result.vocal_duration = vocal_duration
+    result.instrumental_rms = instrumental_rms
 
     if result.separated and (keep_stems or output_dir):
         base_dir = Path(output_dir) if output_dir else Path(tempfile.mkdtemp(prefix="maestro_stems_"))
@@ -261,7 +274,12 @@ def separate_vocals(
                     base_dir.rmdir()
                 except OSError:
                     pass
-    elif result.method == "passthrough":
-        warnings.append("Vocals were NOT separated (passthrough mode); pitch analysis uses the full mix.")
+
+    # Add diagnostic warning if vocal energy is very low
+    if vocal_rms < 0.001:
+        warnings.append(
+            f"WARNING: Separated vocal stem has very low energy (RMS={vocal_rms:.6f}). "
+            "Pitch detection may be unreliable. Check vocal separation quality."
+        )
 
     return result, warnings
